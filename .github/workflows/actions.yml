@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ master ]
   schedule:
-    - cron: 7 12 */3 * *
+    - cron: 0 0 */5 * *
 
 jobs:
   build:
@@ -46,4 +46,11 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
       run: |
+        random_time=$(($RANDOM % 60))
+        echo "等待 ${random_time} 分钟后开始登录"
+        for((i=1;i<=${random_time};i++));
+        do
+        echo "倒计时 $[${random_time}-$i] 分钟"
+        sleep 1m
+        done
         python scripts/_degoo.py
